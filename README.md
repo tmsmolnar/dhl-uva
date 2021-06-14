@@ -1,2 +1,2 @@
-# dhl-uva
- Digital Humanities Lab group project @ Universiteit van Amsterdam
+# dhl-uva [WIP]
+Digital Humanities Lab - group project @ Universiteit van Amsterdam
