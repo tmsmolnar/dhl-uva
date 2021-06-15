@@ -36,7 +36,7 @@ def tokenizePDF(dictionary):
     stopWords = stopwords.words('english')
 
     for keys in dictionary:
-        dictionary[keys] = dictionary[keys].replace('\n', ' ')
+        dictionary[keys] = dictionary[keys].replace('\n', ' ').lower()
 
         tokenized = word_tokenize(dictionary[keys])
         tokenized = [word for word in tokenized if not word in stopWords]

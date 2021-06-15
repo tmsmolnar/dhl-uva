@@ -40,7 +40,7 @@ tokenizedArticles = dict()
 stopWords = stopwords.words('english')
 
 for key in articles:
-    articles[key] = articles[key].replace('\n', ' ')
+    articles[key] = articles[key].replace('\n', ' ').lower()
     
     tokenized = word_tokenize(articles[key])
     tokenized = [word for word in tokenized if not word in stopWords]
