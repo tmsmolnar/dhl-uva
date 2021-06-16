@@ -1,12 +1,11 @@
 # [WIP]
 
-
 import pandas as pd
 from nltk.stem.porter import *
 from nltk.corpus import stopwords
 from gensim import corpora, models
 from nltk.tokenize import word_tokenize
-import gensim, os, fitz, string, nltk, PyPDF2
+import PyPDF2, nltk, string, fitz, os, gensim
 from gensim.parsing.preprocessing import STOPWORDS
 from nltk.stem import WordNetLemmatizer, SnowballStemmer
 
@@ -83,6 +82,11 @@ def toDataFrame(data):
     return dataFrame
 
 
+def listOfWords(dataFrame):
+    listOfWords = gensim.corpora.Dictionary(dataFrame['content'])
+
+    return listOfWords
+
 def corpusOfWords(dataFrame):
 
     listOfWords = gensim.corpora.Dictionary(dataFrame['content'])
@@ -91,9 +95,9 @@ def corpusOfWords(dataFrame):
     return corpus
 
 
-def tfidfModel(listOfWords):
+def tfidfCorpus(listOfWords, dataFrame):
 
-    model = gensim.models.TfidfModel(corpusOfWords)
-    tfidfCorpus = model[corpusOfWords]
+    tfidfModel = gensim.models.TfidfModel(corpusOfWords(dataFrame))
+    tfidfCorpus = tfidfModel[corpusOfWords]
 
     return tfidfCorpus
