@@ -10,7 +10,13 @@ import PyPDF2
 from nltk.tokenize import word_tokenize
 from gensim.parsing.preprocessing import STOPWORDS
 from nltk.stem import WordNetLemmatizer, SnowballStemmer
-from nltk.stem.porter import stemmer
+from nltk.stem.porter import *
+nltk.download('wordnet')
+
+string.punctuation += "”"
+string.punctuation += "“"
+string.punctuation += "’"
+string.punctuation += "‘"
 
 
 def readPDF(folder):
@@ -39,8 +45,11 @@ def readPDF(folder):
     return articles
 
 
-def lemmatizeAndStem(data):
-    return stemmer.stem(WordNetLemmatizer().lemmatize(data, pos='v'))
+def lemmatizeAndStem(word):
+
+    stemmer = SnowballStemmer('english')
+
+    return stemmer.stem(WordNetLemmatizer().lemmatize(word, pos='v'))
 
 
 def tokenizePDF(dictionary):
@@ -51,13 +60,13 @@ def tokenizePDF(dictionary):
 
     for keys in dictionary:
         dictionary[keys] = dictionary[keys].replace('\n', ' ')
-
         tokenized = word_tokenize(dictionary[keys])
         tokenized = [word for word in tokenized if not word in nltkStopWords]
         tokenized = [word for word in tokenized if not word in gensimStopWords]
         tokenized = [
             word for word in tokenized if not word in string.punctuation]
-        tokenizedPDF[keys] = lemmatizeAndStem(tokenized)
+        tokenized = [lemmatizeAndStem(word) for word in tokenized]
+        tokenizedPDF[keys] = tokenized
 
     return tokenizedPDF
 
