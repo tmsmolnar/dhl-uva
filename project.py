@@ -7,6 +7,7 @@
 from nltk.corpus import stopwords
 import os, fitz, string, nltk, PyPDF2
 from nltk.tokenize import word_tokenize
+from functions import readPDF, tokenizePDF, lemmatizeAndStem, toDataFrame
 
 
 # Reading the files and convert from pdf to string/dict
