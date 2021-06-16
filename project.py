@@ -1,9 +1,3 @@
-# [WIP]
-# Will be re-written into functions!
-# [WIP]
-# Just outlining the structure yet!
-# [WIP]
-
 from nltk.corpus import stopwords
 import os
 import fitz
@@ -15,7 +9,7 @@ from gensim.parsing.preprocessing import STOPWORDS
 from nltk.stem import WordNetLemmatizer, SnowballStemmer
 from nltk.stem.porter import *
 import pandas as pd
-from functions import readPDF, tokenizePDF, lemmatizeAndStem, toDataFrame
+from functions import readPDF, processPDF, lemmatizeAndStem, toDataFrame
 
 string.punctuation += "”"
 string.punctuation += "“"
@@ -30,49 +24,12 @@ keywords = ['philosophy', 'orient', 'oriental philosophy', 'orient', 'eastern ph
 
 
 # Reading the files and convert from pdf to string/dict
-
-articles = dict()
-
-for root, dirs, files in os.walk('sources'):
-    for file in files:
-        file_path = os.path.join(root, file)
-
-        pdf = fitz.open(file_path)
-        text = ""
-        output = []
-
-        with open(file_path, 'rb') as pdf2:
-            reader = PyPDF2.PdfFileReader(pdf2)
-            numberPages = reader.numPages
-
-            for index in range(0, numberPages):
-                page = pdf[index]
-                text += page.getText('text')
-
-        articles[file] = text
-        output.append(text)
+articles = readPDF('sources')
 
 # Basic text-processing, tokenize and filtering
-
-tokenizedArticles = dict()
-
-nltkStopWords = stopwords.words('english')
-gensimStopWords = STOPWORDS
-
-for key in articles:
-    articles[key] = articles[key].replace('\n', ' ').lower()
-
-    tokenized = word_tokenize(articles[key])
-    tokenized = [word for word in tokenized if not word in nltkStopWords]
-    tokenized = [word for word in tokenized if not word in gensimStopWords]
-    tokenized = [word for word in tokenized if not word in string.punctuation]
-    tokenized = [lemmatizeAndStem(word) for word in tokenized]
-    tokenizedArticles[key] = tokenized
+processedArticles = processPDF(articles)
 
 
 # Gensim, LDA stuff
-
-dataFrame = pd.DataFrame(tokenizedArticles.items(),
-                         columns=['file_name', 'content'])
-
+dataFrame = toDataFrame(processedArticles)
 print(dataFrame)

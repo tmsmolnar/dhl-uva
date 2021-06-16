@@ -1,1 +1,1 @@
-from .functions import readPDF, tokenizePDF, lemmatizeAndStem, toDataFrame
+from .functions import readPDF, processPDF, lemmatizeAndStem, toDataFrame

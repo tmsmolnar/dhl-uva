@@ -52,23 +52,23 @@ def lemmatizeAndStem(word):
     return stemmer.stem(WordNetLemmatizer().lemmatize(word, pos='v'))
 
 
-def tokenizePDF(dictionary):
+def processPDF(dictionary):
 
-    tokenizedPDF = dict()
+    processedPDF = dict()
     nltkStopWords = stopwords.words('english')
     gensimStopWords = STOPWORDS
 
     for keys in dictionary:
         dictionary[keys] = dictionary[keys].replace('\n', ' ')
-        tokenized = word_tokenize(dictionary[keys])
-        tokenized = [word for word in tokenized if not word in nltkStopWords]
-        tokenized = [word for word in tokenized if not word in gensimStopWords]
-        tokenized = [
-            word for word in tokenized if not word in string.punctuation]
-        tokenized = [lemmatizeAndStem(word) for word in tokenized]
-        tokenizedPDF[keys] = tokenized
+        processed = word_tokenize(dictionary[keys])
+        processed = [word for word in processed if not word in nltkStopWords]
+        processed = [word for word in processed if not word in gensimStopWords]
+        processed = [
+            word for word in processed if not word in string.punctuation]
+        processed = [lemmatizeAndStem(word) for word in processed]
+        processedPDF[keys] = processed
 
-    return tokenizedPDF
+    return processedPDF
 
 
 def toDataFrame(data):
