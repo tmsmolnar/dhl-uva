@@ -1,22 +1,24 @@
 # [WIP]
 
+
 import pandas as pd
+from nltk.stem.porter import *
 from nltk.corpus import stopwords
-import os
-import fitz
-import string
-import nltk
-import PyPDF2
+from gensim import corpora, models
 from nltk.tokenize import word_tokenize
+import gensim, os, fitz, string, nltk, PyPDF2
 from gensim.parsing.preprocessing import STOPWORDS
 from nltk.stem import WordNetLemmatizer, SnowballStemmer
-from nltk.stem.porter import *
+
 nltk.download('wordnet')
 
 string.punctuation += "”"
 string.punctuation += "“"
 string.punctuation += "’"
 string.punctuation += "‘"
+string.punctuation += "``"
+string.punctuation += "''"
+string.punctuation += "|||"
 
 
 def readPDF(folder):
@@ -65,6 +67,9 @@ def processPDF(dictionary):
         processed = [word for word in processed if not word in gensimStopWords]
         processed = [
             word for word in processed if not word in string.punctuation]
+        processed = [word for word in processed if not word in string.digits]
+        processed = [
+            word for word in processed if not word in string.whitespace]
         processed = [lemmatizeAndStem(word) for word in processed]
         processedPDF[keys] = processed
 
@@ -76,3 +81,19 @@ def toDataFrame(data):
     dataFrame = pd.DataFrame(data.items(), columns=['file_name', 'content'])
 
     return dataFrame
+
+
+def corpusOfWords(dataFrame):
+
+    listOfWords = gensim.corpora.Dictionary(dataFrame['content'])
+    corpus = [listOfWords.doc2bow(doc) for doc in dataFrame['content']]
+
+    return corpus
+
+
+def tfidfModel(listOfWords):
+
+    model = gensim.models.TfidfModel(corpusOfWords)
+    tfidfCorpus = model[corpusOfWords]
+
+    return tfidfCorpus
