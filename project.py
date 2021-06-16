@@ -17,12 +17,6 @@ string.punctuation += "’"
 string.punctuation += "‘"
 
 
-keywords = ['philosophy', 'orient', 'oriental philosophy', 'orient', 'eastern philosophy', 'india', 'china',
-            'chinese philosophy', 'ancient', 'dao', 'theory', 'theories', 'confucian', 'western', 'eastern',
-            'gender', 'feminism', 'feminist', 'feminist theory', 'gender theory', 'religion', 'religious',
-            'buddhism', 'contemporary', 'contemporary philosophy', 'spiritual']
-
-
 # Reading the files and convert from pdf to string/dict
 articles = readPDF('sources')
 

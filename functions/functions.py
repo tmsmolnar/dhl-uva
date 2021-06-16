@@ -98,6 +98,6 @@ def corpusOfWords(dataFrame):
 def tfidfCorpus(listOfWords, dataFrame):
 
     tfidfModel = gensim.models.TfidfModel(corpusOfWords(dataFrame))
-    tfidfCorpus = tfidfModel[corpusOfWords]
+    tfidfCorpus = tfidfModel[corpusOfWords(dataFrame)]
 
     return tfidfCorpus
