@@ -1,5 +1,3 @@
-# [WIP]
-
 import pandas as pd
 from nltk.stem.porter import *
 from nltk.corpus import stopwords
@@ -33,7 +31,7 @@ def readPDF(folder):
             output = []
 
             with open(file_path, 'rb') as f:
-                reader = PyPDF2.PdfFileReader(f)
+                reader = PyPDF2.PdfFileReader(f, strict=False)
                 numberOfPages = reader.numPages
 
                 for index in range(0, numberOfPages):
@@ -64,11 +62,10 @@ def processPDF(dictionary):
         processed = word_tokenize(dictionary[keys])
         processed = [word for word in processed if not word in nltkStopWords]
         processed = [word for word in processed if not word in gensimStopWords]
-        processed = [
-            word for word in processed if not word in string.punctuation]
+        processed = [word for word in processed if not word in string.punctuation]
         processed = [word for word in processed if not word in string.digits]
-        processed = [
-            word for word in processed if not word in string.whitespace]
+        processed = [word for word in processed if not word in string.whitespace]
+        processed = [word for word in processed if len(word) > 3]
         processed = [lemmatizeAndStem(word) for word in processed]
         processedPDF[keys] = processed
 
