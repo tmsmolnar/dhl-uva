@@ -1,3 +1,4 @@
+from nltk.corpus.reader.wordnet import wup_similarity
 import pandas as pd
 from nltk.stem.porter import *
 from nltk.corpus import stopwords
@@ -80,21 +81,25 @@ def toDataFrame(data):
 
 
 def listOfWords(dataFrame):
+
     listOfWords = gensim.corpora.Dictionary(dataFrame['content'])
+    #listOfWords = listOfWords.filter_extremes(no_below=5, no_above=2, keep_n=10000)
 
     return listOfWords
 
-def corpusOfWords(dataFrame):
+def wordsPerArticle(dataFrame):
 
-    listOfWords = gensim.corpora.Dictionary(dataFrame['content'])
-    corpus = [listOfWords.doc2bow(doc) for doc in dataFrame['content']]
+    LoW = listOfWords(dataFrame)
+    corpus = [LoW.doc2bow(article) for article in dataFrame['content']]
 
     return corpus
 
 
 def tfidfCorpus(listOfWords, dataFrame):
 
-    tfidfModel = gensim.models.TfidfModel(corpusOfWords(dataFrame))
-    tfidfCorpus = tfidfModel[corpusOfWords(dataFrame)]
+    WpA = wordsPerArticle(dataFrame)
+
+    tfidfModel = gensim.models.TfidfModel(WpA)
+    tfidfCorpus = tfidfModel[WpA]
 
     return tfidfCorpus

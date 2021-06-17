@@ -1,1 +1,1 @@
-from .functions import readPDF, processPDF, lemmatizeAndStem, toDataFrame, listOfWords, corpusOfWords, tfidfCorpus
+from .functions import readPDF, processPDF, lemmatizeAndStem, toDataFrame, listOfWords, wordsPerArticle, tfidfCorpus
