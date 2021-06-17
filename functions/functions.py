@@ -1,4 +1,3 @@
-from nltk.corpus.reader.wordnet import wup_similarity
 import pandas as pd
 from nltk.stem.porter import *
 from nltk.corpus import stopwords
