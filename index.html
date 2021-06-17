@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ol id="list"></ol>
+    <script>
+        const list = document.getElementById('list')
+        let result = [];
+        const requests = [];
+
+        for (let i = 1; i < 60; i++) {
+            requests.push(fetch('http://api.springernature.com/metadata/json?q=keyword:oriental%20philosophy&api_key=66b0494e430e4e7a49ebe3777f5bc49f&s=' + i))
+        }
+
+        Promise.all(requests)
+            .then(async (responses) => {
+                const jsonResponses = [];
+                for (const response of responses)
+                    jsonResponses.push(await response.json());
+                return jsonResponses
+            })
+            .then((jsonResponses) => {
+                for (const json of jsonResponses) {
+                    result = [...result, ...json.records.map((x) => x.url[0].value)];
+                }
+            })
+            .then(() => {
+                result = [...new Set(result)]
+                for (const r of result) {
+                    const list = document.getElementById('list');
+                    const k = document.createElement('li');
+                    const l = document.createElement('a');
+                    l.innerText = r;
+                    l.href = r;
+                    k.appendChild(l);
+                    list.appendChild(k);
+                }
+            })
+            .catch((e) => console.error(e))
+    </script>
+</body>
+
+</html>
