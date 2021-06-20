@@ -10,7 +10,7 @@ This is the final group project of the WG04 for the Digital Humanities Lab cours
 This project is a topic modelling tool, focusing on oriental philosophy. 
 Due to ethical concerns and avoiding infringing any copyright laws, we did not upload the articles we used to conclude and write our project report.
 However, from the Dictionary of Open Access Journals we uploaded a couple of open access articles, to demonstrate the topic modelling tool in motion, in the folder "open access journals".
-In the repository, the scraping tool used to get the academic papers focusing on oriental philosophy from the online library Springer, can be found found, under the name of "doi_scraper_api.html"
+In the repository, the scraping tool used to get the academic papers focusing on oriental philosophy from the online library Springer, can be found, under the name of "doi_scraper_api.html"
 With the help of this scraper file, the user is able to get the links of the same documents we used to evaluate the performance of our program in the report, however, an insititutional access or subscription is still needed to access the academic articles.
 
 For more explanation of the python package written for this project see:
