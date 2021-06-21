@@ -36,7 +36,7 @@ However, to run this Jupyter Notebook, one needs to have the following libraries
     pandas, nltk, gensim, PyPDF2, PyMuPDF
 
 
-### Author
+### Authors
 **2021 - DHL WG04 - UvA**<br />
 **Python codes: Tamás Molnár**<br />
 **HTML/JS codes: Kirsty Smith**
