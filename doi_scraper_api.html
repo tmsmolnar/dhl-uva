@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 
 <head>
@@ -11,40 +11,39 @@
 <body>
     <ol id="list"></ol>
     <script>
-        const list = document.getElementById('list')
+        const list = document.getElementById('list') // the getElementById is the function that enables the program to scrape the element in line 12
         let result = [];
         const requests = [];
 
-        for (let i = 1; i < 60; i++) {
+        for (let i = 1; i < 60; i++) { // the amount of articles to be scraped starting from 1 until 60
             requests.push(fetch('http://api.springernature.com/metadata/json?q=keyword:oriental%20philosophy&api_key=66b0494e430e4e7a49ebe3777f5bc49f&s=' + i))
-        }
+        } // the fetch function is to obtain the articles from the keyword API demand being oriental%20philosophy on springernature
 
-        Promise.all(requests)
-            .then(async (responses) => {
-                const jsonResponses = [];
+        Promise.all(requests) // Promise.all is to wait until all of the articles are scraped
+            .then(async (responses) => { 
+                const jsonResponses = []; 
                 for (const response of responses)
-                    jsonResponses.push(await response.json());
+                    jsonResponses.push(await response.json()); // await is to make the system wait for the async function is finished to move on
                 return jsonResponses
             })
-            .then((jsonResponses) => {
+            .then((jsonResponses) => { // collect the answers and put it in a list 
                 for (const json of jsonResponses) {
-                    result = [...result, ...json.records.map((x) => x.url[0].value)];
+                    result = [...result, ...json.records.map((x) => x.url[0].value)]; // specific details with the map function that renews the data
                 }
             })
-            .then(() => {
-                result = [...new Set(result)]
+            .then(() => { // then returns a promise
+                result = [...new Set(result)] // eliminate all of the double articles found
                 for (const r of result) {
-                    const list = document.getElementById('list');
-                    const k = document.createElement('li');
-                    const l = document.createElement('a');
-                    l.innerText = r;
-                    l.href = r;
-                    k.appendChild(l);
-                    list.appendChild(k);
+                    const li = document.createElement('li'); // the 'li' is to make the URLs go into descending order with a labelled number
+                    const a = document.createElement('a'); // 'a' is a hyperlink that connects links to others and is implemented in 'li'
+                    a.innerText = r; // define text in the balise
+                    a.href = r; // define text in the balise
+                    li.appendChild(a); // put balise 'a' in balise 'li' to have a clickable link
+                    list.appendChild(li); // add 'li' into list that we took at the start
                 }
             })
-            .catch((e) => console.error(e))
+            .catch((e) => console.error(e)) // .catch enables us to see the error for quicker observation
     </script>
 </body>
 
-</html>
+</html> 
