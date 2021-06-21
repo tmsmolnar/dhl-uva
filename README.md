@@ -38,6 +38,8 @@ However, to run this Jupyter Notebook, one needs to have the following libraries
 
 ### Author
 **2021 - DHL WG04 - UvA**
+**Python codes: Tamás Molnár**
+**HTML/JS codes: Kirsty Smith
 
 ### License
 [MIT](https://choosealicense.com/licenses/mit/)
