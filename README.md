@@ -1,4 +1,4 @@
-# dhl-uva
+# Topic modelling tool for PDFs - dhl-uva
 Digital Humanities Lab - final group project @ Universiteit van Amsterdam
 
 ### Digital Humanities Lab - UvA
